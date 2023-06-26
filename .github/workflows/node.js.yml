@@ -5,9 +5,9 @@ name: Node.js CI
 
 on:
   push:
-    branches: [ "dev" ]
-  # pull_request:
-  #   branches: [ "main" ]
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
 
 jobs:
   build:
@@ -30,19 +30,23 @@ jobs:
         cache: 'npm'
 
     - name: Go to Frontend
-    - run: cd frontend
-    - run: ls -a
+    - run: |
+        cd frontend 
+        ls -a
 
     - name: Install and Build Angular
-    - run: npm install
-    - run: npm run build
-    - run: npm test
+    - run: |
+        npm install
+        npm run build
+        npm test
     
     - name: Go to Backend    
-    - run: cd ../backend
-    - run: ls -a
+    - run: |
+        cd ../backend
+        ls -a
 
     - name: Install and Build Nestjs
-    - run: npm install
-    - run: npm run build
-    - run: npm test
+    - run: |
+        npm install
+        npm run build
+        npm test
