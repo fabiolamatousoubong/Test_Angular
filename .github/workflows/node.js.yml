@@ -21,7 +21,7 @@ jobs:
 
     steps:
     - name: Checkout code
-    - uses: actions/checkout@v3
+      uses: actions/checkout@v3
 
     - name: Build Angular ${{ matrix.node-version }}
       uses: actions/setup-node@v3
@@ -30,23 +30,23 @@ jobs:
         cache: 'npm'
 
     - name: Go to Frontend
-    - run: |
+      run: |
         cd frontend 
         ls -a
 
     - name: Install and Build Angular
-    - run: |
+      run: |
         npm install
         npm run build
         npm test
     
     - name: Go to Backend    
-    - run: |
+      run: |
         cd ../backend
         ls -a
 
     - name: Install and Build Nestjs
-    - run: |
+      run: |
         npm install
         npm run build
         npm test
