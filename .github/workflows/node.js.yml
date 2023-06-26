@@ -6,8 +6,8 @@ name: Node.js CI
 on:
   push:
     branches: [ "dev" ]
-  pull_request:
-    branches: [ "main" ]
+  # pull_request:
+  #   branches: [ "main" ]
 
 jobs:
   build:
@@ -16,27 +16,33 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [18.x]
+        node-version: [14.x, 16.x, 18.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
+    - name: Checkout code
     - uses: actions/checkout@v3
+
     - name: Build Angular ${{ matrix.node-version }}
       uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
+
+    - name: Go to Frontend
     - run: cd frontend
+    - run: ls -a
+
+    - name: Install and Build Angular
     - run: npm install
     - run: npm run build
     - run: npm test
     
-    - name: Build Nestjs ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
+    - name: Go to Backend    
     - run: cd ../backend
+    - run: ls -a
+
+    - name: Install and Build Nestjs
     - run: npm install
     - run: npm run build
     - run: npm test
