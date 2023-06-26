@@ -43,11 +43,11 @@ jobs:
     - name: Setup Node
       uses: actions/setup-node@v3
       with:
-        node-version: 18
+        node-version: 16
         cache: 'npm'
 
     - name: Install and Build Nestjs
       run: |
-        npm install
+        npm install --package-lock-only
         npm run build
         npm test
