@@ -51,3 +51,6 @@ jobs:
         npm install --package-lock-only
         npm run build
         npm test
+    - name: Generate Dependencies Lock File
+      run: npm ci
+
