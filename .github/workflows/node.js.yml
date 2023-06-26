@@ -17,17 +17,17 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
-
+      
+    - name: Go to Frontend
+      run: |
+        cd frontend 
+        ls -a
+      
     - name: Setup Node
       uses: actions/setup-node@v3
       with:
         node-version: 18
         cache: 'npm'
-
-    - name: Go to Frontend
-      run: |
-        cd frontend 
-        ls -a
 
     - name: Install and Build Angular
       run: |
@@ -39,6 +39,12 @@ jobs:
       run: |
         cd ../backend
         ls -a
+        
+    - name: Setup Node
+      uses: actions/setup-node@v3
+      with:
+        node-version: 18
+        cache: 'npm'
 
     - name: Install and Build Nestjs
       run: |
