@@ -1,7 +1,62 @@
 # This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
 
-name: Node.js CI
+#name: Node.js CI
+
+#on:
+#  push:
+#    branches: [ "main" ]
+#  pull_request:
+ #   branches: [ "main" ]
+
+#jobs:
+#  build:
+
+#    runs-on: ubuntu-latest
+#       
+ #   steps:
+ #   - name: Checkout code
+  #    uses: actions/checkout@v3
+      
+  #  - name: Go to Frontend
+   #   run: |
+    #    cd frontend 
+    #    ls -a
+      
+  #  - name: Setup Node
+    #  uses: actions/setup-node@v3
+ #     with:
+   #     node-version: 18
+  #      cache: 'npm'
+
+#    - name: Install and Build Angular
+  #    run: |
+  #      npm install
+  #      npm run build
+   #     npm test
+    
+#    - name: Go to Backend    
+ #     run: |
+ ##       cd ../backend
+   #     ls -a
+        
+#    - name: Setup Node
+  #    uses: actions/setup-node@v3
+   #   with:
+   #     node-version: 18
+     #   cache: 'npm'
+
+  #  - name: Install and Build Nestjs
+    #  run: |
+      #  npm install --package-lock-only
+      #  npm run build
+      #  npm test
+    #- name: Generate Dependencies Lock File
+      #run: npm ci
+      
+      
+      # This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
 
 on:
   push:
@@ -10,47 +65,52 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
+  windows-build:
+    runs-on: windows-latest
 
-    runs-on: ubuntu-latest
-       
+    strategy:
+      matrix:
+        node-version: [16.x]
+
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
-      
-    - name: Go to Frontend
-      run: |
-        cd frontend 
-        ls -a
-      
-    - name: Setup Node
+    - uses: actions/checkout@v3
+
+    - name: Set up Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
       with:
-        node-version: 18
-        cache: 'npm'
-
-    - name: Install and Build Angular
-      run: |
-        npm install
-        npm run build
-        npm test
-    
-    - name: Go to Backend    
-      run: |
-        cd ../backend
-        ls -a
+        node-version: ${{ matrix.node-version }}
         
-    - name: Setup Node
-      uses: actions/setup-node@v3
-      with:
-        node-version: 18
-        cache: 'npm'
+    # - name: go to Frontend 
+    #   run: cd projekt-frontend
 
-    - name: Install and Build Nestjs
-      run: |
-        npm install --package-lock-only
-        npm run build
-        npm test
-    - name: Generate Dependencies Lock File
-      run: npm ci
+    - name:  go to Frontend Install Dependencies
+      working-directory: frontend
+      run: npm install 
+
+    - name: Build
+      working-directory: frontend
+      run: npm run build
+      env:
+        CI: true
+    # - name: Run Tests
+    #   working-directory: ./projekt-backend
+    #   run: npm test
+
+    # - name: go to Backend 
+    #   run: cd ../projekt-backend
+
+    - name: go to Backend Install Dependencies
+      working-directory: backend
+      run: npm install 
+
+    - name: Build
+      working-directory: backend
+      run: npm run build
+      env:
+        CI: true
+    # - name: Run Tests
+    #   working-directory: ./projekt-backend
+    #   run: npm test
+
+
 
