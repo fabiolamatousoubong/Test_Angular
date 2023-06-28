@@ -1,4 +1,7 @@
-# Test_Angular
-This is a Test of Angular
-trigger 2
+# Angular Github Page
+This is a simple project deployed using Github Pages
 
+
+## Initialize
+## Setup
+## Deploy
